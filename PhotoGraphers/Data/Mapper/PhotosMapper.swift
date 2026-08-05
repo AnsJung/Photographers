@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum PhotoMapper {
+enum PhotosMapper {
     static func map(_ response: [PhotosResponseDTO]) -> [Photo] {
         response.map { dto in
             Photo(

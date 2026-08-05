@@ -26,15 +26,31 @@ final class TempViewModel : ObservableObject {
                 case .failure(let error):
                     print("fail:", error)
                 }
-            } receiveValue: { response in
-                response.results.forEach { photographer in
-                    print("name:", photographer.name.first, photographer.name.last)
+            } receiveValue: { photographers in
+                photographers.forEach { photographer in
+                    print("name:", photographer.name)
                     print("email:", photographer.email)
-                    print("thumbnail:", photographer.picture.medium)
+                    print("thumbnail:", photographer.profileImageURL.absoluteString)
                     print("---")
                 }
             }
             .store(in: &cancellables)
-        
+    }
+    
+    func fetchPhotos(){
+        repository.fetchPhotos()
+            .sink { completion in
+                switch completion{
+                case .finished:
+                    print("완료")
+                case .failure(let error):
+                    print("fail:", error)
+                }
+            } receiveValue: { photos in
+                photos.forEach { photo in
+                    print("\(photo.id) >> \(photo.imageURL.absoluteString)")
+                }
+            }
+            .store(in: &cancellables)
     }
 }

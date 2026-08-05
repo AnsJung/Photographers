@@ -32,7 +32,7 @@ struct ContentView: View {
         .padding()
         .onAppear {
             print("네트워크 요청")
-            viewModel.fetchPhotographers()
+            viewModel.fetchPhotos()
         }
     }
 }

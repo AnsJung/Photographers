@@ -51,7 +51,7 @@ final class StubStartRepository: StartPhotographersRepository {
                     ),
                     email: "annie@example.com",
                     picture: PhotographerPictureDTO(
-                        medium:  "https://randomuser.me/api/portraits/med/women/1.jpg",
+                        medium:  URL(string:"https://randomuser.me/api/portraits/med/women/1.jpg")!,
                     )
                 ),
             ]

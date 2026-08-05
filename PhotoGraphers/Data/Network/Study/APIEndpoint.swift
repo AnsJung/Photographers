@@ -9,6 +9,7 @@ import Foundation
 /// 앱에서 사용하는 API 요청 정보를 정의한다.
 enum APIEndpoint {
     case photographers
+    case photos
 
     var url: URL? {
         switch self {
@@ -18,6 +19,12 @@ enum APIEndpoint {
                 URLQueryItem(name: "results", value: "30"),
                 URLQueryItem(name: "inc", value: "name,email,picture"),
                 URLQueryItem(name: "seed", value: "photographers")
+            ]
+            return components?.url
+        case . photos:
+            var components = URLComponents(string: "https://picsum.photos/v2/list")
+            components?.queryItems = [
+                URLQueryItem(name: "limit", value: "30"),
             ]
             return components?.url
         }

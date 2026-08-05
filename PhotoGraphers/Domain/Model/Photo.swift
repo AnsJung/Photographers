@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Photos : Identifiable {
-    let id : Int
+struct Photo : Identifiable {
+    let id : String
     let imageURL : URL
 }

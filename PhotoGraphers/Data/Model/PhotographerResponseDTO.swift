@@ -4,7 +4,7 @@
 //
 //  Created by 이정현 on 8/3/26.
 //
-
+import Foundation
 
 struct PhotographerResponseDTO: Decodable {
     let results: [PhotographerUserDTO]
@@ -22,5 +22,5 @@ struct PhotographerNameDTO: Decodable {
 }
 
 struct PhotographerPictureDTO: Decodable {
-    let medium: String
+    let medium: URL
 }

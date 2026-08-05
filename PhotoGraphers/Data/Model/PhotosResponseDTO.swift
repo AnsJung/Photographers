@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+struct PhotosResponseDTO : Decodable {
+    let id: String
+    let imageURL : URL
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case imageURL = "download_url"
+    }
+}

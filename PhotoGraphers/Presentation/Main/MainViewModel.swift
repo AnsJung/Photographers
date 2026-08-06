@@ -9,19 +9,22 @@ import Foundation
 import Combine
 import FactoryKit
 
-final class TempViewModel : ObservableObject {
+final class MainViewModel : ObservableObject {
     
     @Injected(\.photographersRepository)
     private var photographersRepository
 
     @Injected(\.photosRepository)
     private var photosRepository
+    
+    @Published var photographers: [Photographer] = []
 
     private var cancellables = Set<AnyCancellable>()
     
     /// 사진작가 목록 요청
     func fetchPhotographers(){
         photographersRepository.fetchPhotographers()
+            .receive(on: DispatchQueue.main)
             .sink { completion in
                 switch completion{
                 case .finished:
@@ -36,6 +39,7 @@ final class TempViewModel : ObservableObject {
                     print("thumbnail:", photographer.profileImageURL.absoluteString)
                     print("---")
                 }
+                self.photographers = photographers
             }
             .store(in: &cancellables)
     }

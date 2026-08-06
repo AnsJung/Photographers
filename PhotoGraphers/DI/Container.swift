@@ -22,7 +22,7 @@ extension Container {
     }
     
     @MainActor
-    var tempViewModel : Factory<TempViewModel> {
-        self{ TempViewModel() }
+    var mainViewModel : Factory<MainViewModel> {
+        self{ MainViewModel() }
     }
 }

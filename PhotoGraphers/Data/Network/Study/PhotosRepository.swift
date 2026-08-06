@@ -6,13 +6,15 @@
 //
 import Foundation
 import Combine
+import FactoryKit
 
 protocol PhotosRepository {
     func fetchPhotos() -> AnyPublisher<[Photo], NetworkError>
 }
 
 final class DefaultPhotosRepository : PhotosRepository {
-    private let networkService: NetworkService
+    @Injected(\.networkService)
+    private var networkService: NetworkService
     
     init(networkService: NetworkService) {
         self.networkService = networkService

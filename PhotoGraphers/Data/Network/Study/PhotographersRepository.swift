@@ -6,13 +6,15 @@
 //
 import Foundation
 import Combine
+import FactoryKit
 
 protocol PhotographersRepository {
     func fetchPhotographers() -> AnyPublisher<[Photographer], NetworkError>
 }
 
 final class DefaultPhotographersRepository : PhotographersRepository {
-    private let networkService: NetworkService
+    @Injected(\.networkService)
+    private var networkService: NetworkService
     
     init(networkService: NetworkService) {
         self.networkService = networkService
@@ -44,3 +46,4 @@ final class StubPhotographersRepository : PhotographersRepository {
             .eraseToAnyPublisher()
     }
 }
+

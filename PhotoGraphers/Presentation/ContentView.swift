@@ -6,21 +6,11 @@
 //
 
 import SwiftUI
+import FactoryKit
 
 struct ContentView: View {
     @StateObject
-    private var viewModel : TempViewModel
-    
-    init(viewModel: TempViewModel) {
-        _viewModel = StateObject(wrappedValue: viewModel)
-    }
-    
-    // TODO: Factory DI 적용 후 제거 예정
-    init() {
-        _viewModel = StateObject(wrappedValue: TempViewModel(
-            repository: DefaultPhotographersRepository(networkService: NetworkService())
-        ))
-    }
+    private var viewModel = Container.shared.tempViewModel()
     
     var body: some View {
         VStack {
@@ -32,11 +22,11 @@ struct ContentView: View {
         .padding()
         .onAppear {
             print("네트워크 요청")
-            viewModel.fetchPhotos()
+            viewModel.fetchPhotographers()
         }
     }
 }
 
 #Preview {
-    ContentView(viewModel: TempViewModel(repository: StubRepository()))
+    ContentView()
 }

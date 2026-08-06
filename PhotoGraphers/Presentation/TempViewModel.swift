@@ -7,18 +7,21 @@
 
 import Foundation
 import Combine
+import FactoryKit
 
 final class TempViewModel : ObservableObject {
-    private let repository: PhotographersRepository
-    private var cancellables = Set<AnyCancellable>()
     
-    init(repository: PhotographersRepository) {
-        self.repository = repository
-    }
+    @Injected(\.photographersRepository)
+    private var photographersRepository
+
+    @Injected(\.photosRepository)
+    private var photosRepository
+
+    private var cancellables = Set<AnyCancellable>()
     
     /// 사진작가 목록 요청
     func fetchPhotographers(){
-        repository.fetchPhotographers()
+        photographersRepository.fetchPhotographers()
             .sink { completion in
                 switch completion{
                 case .finished:
@@ -38,7 +41,7 @@ final class TempViewModel : ObservableObject {
     }
     
     func fetchPhotos(){
-        repository.fetchPhotos()
+        photosRepository.fetchPhotos()
             .sink { completion in
                 switch completion{
                 case .finished:

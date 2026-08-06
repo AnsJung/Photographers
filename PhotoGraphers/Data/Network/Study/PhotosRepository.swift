@@ -7,24 +7,15 @@
 import Foundation
 import Combine
 
-protocol PhotographersRepository {
-    func fetchPhotographers() -> AnyPublisher<[Photographer], NetworkError>
+protocol PhotosRepository {
     func fetchPhotos() -> AnyPublisher<[Photo], NetworkError>
 }
 
-final class DefaultPhotographersRepository : PhotographersRepository {
+final class DefaultPhotosRepository : PhotosRepository {
     private let networkService: NetworkService
     
     init(networkService: NetworkService) {
         self.networkService = networkService
-    }
-    
-    func fetchPhotographers() -> AnyPublisher<[Photographer], NetworkError> {
-        networkService.request(.photographers)
-            .map { (response: PhotographerResponseDTO) in
-                PhotographerMapper.map(response)
-            }
-            .eraseToAnyPublisher()
     }
     
     func fetchPhotos() -> AnyPublisher<[Photo], NetworkError> {
@@ -36,23 +27,7 @@ final class DefaultPhotographersRepository : PhotographersRepository {
     }
 }
 
-final class StubRepository: PhotographersRepository {
-    
-    func fetchPhotographers() -> AnyPublisher<[Photographer], NetworkError> {
-        let photographers = [
-            Photographer(
-                id: 0,
-                name: "Annie Leibovitz",
-                email: "annie@example.com",
-                profileImageURL: URL(string: "https://randomuser.me/api/portraits/med/women/1.jpg")!
-            )
-        ]
-        
-        return Just(photographers)
-            .setFailureType(to: NetworkError.self)
-            .eraseToAnyPublisher()
-    }
-    
+final class StubPhotosRepository: PhotosRepository {
     func fetchPhotos() -> AnyPublisher<[Photo], NetworkError> {
         let response = [
             Photo(

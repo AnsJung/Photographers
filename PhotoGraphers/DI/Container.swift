@@ -25,4 +25,10 @@ extension Container {
     var mainViewModel : Factory<MainViewModel> {
         self{ MainViewModel() }
     }
+    
+    @MainActor
+    var router : Factory<Router> {
+        self { Router() }
+            .scope(.singleton)
+    }
 }
